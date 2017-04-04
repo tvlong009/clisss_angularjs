@@ -1,0 +1,31 @@
+{
+  "name": "clisss",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tool":"npm install",
+    "libs": "cd admin && bower install && cd ../client && bower install",
+    "watch": "gulp watch",
+    "start": "gulp && gulp server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-clean-css": "^3.0.4",
+    "gulp-concat": "^2.6.1",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-ng-annotate": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-server-livereload": "^1.9.2",
+    "gulp-uglify": "^2.1.2",
+    "node-sass": "^4.5.2",
+    "lodash": "^4.17.4"
+  }
+}

@@ -1,0 +1,79 @@
+body{
+  background-color: #cccccc;
+
+  .components{
+    max-height: 400px;
+    overflow-y: auto;
+    width: 75%;
+    margin: 0 auto 5px;
+
+    .btn-dragable{
+      text-align: left;
+      margin-bottom: 5px;
+    }
+  }
+
+  .bin{
+    width:40%;
+    margin: 0 auto;
+    img{
+      text-align: center;
+      width:100%;
+      height: auto;
+      margin: 0 auto;
+    }
+  }
+
+  &.sidebar-collapse{
+    .wrapper-design{
+      left:50px;
+    }
+  }
+
+  .wrapper-design{
+    position: absolute;
+    top:52px;
+    left:230px;
+    right: 0;
+    bottom:0;
+
+    .resizer{
+      background-color: #CCCCCC;
+      cursor: e-resize;
+      display: inline-block;
+      width: 6px;
+      height: 100%;
+
+      &.horizontal{
+        cursor: n-resize;
+        display: block;
+        width: 100%;
+        height: 6px;
+      }
+
+
+      &:hover {
+        background-color: #AAA;
+      }
+    }
+
+    @for $i from 1 through 10 {
+      $percent: $i*10 + unquote("%");
+      .resize-vertical-#{$i} {
+        width: calc(#{$percent} - 3px);
+        height:100%;
+        display: inline-block;
+        overflow-y: auto;
+        position: relative;
+        vertical-align: top;
+      }
+      .resize-horizontal-#{$i} {
+        height: calc(#{$percent} - 3px);
+        overflow-y: auto;
+        position: relative;
+      }
+    }
+
+  }
+
+}

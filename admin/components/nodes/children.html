@@ -1,0 +1,19 @@
+<div dnd-list="list" 
+     class="__clisss children flexFatherDefault"
+     ng-class="joinClass(item.properties.classes, models.selected === item)"
+     ng-style="item.type=='stacked' ? joinStyles(item.properties.styles): ''"
+     >
+  <div ng-repeat="item in list track by $index"
+       dnd-draggable="item"
+       dnd-effect-allowed="move"
+       dnd-moved="list.splice($index, 1)"
+       dnd-selected="models.selected = item"
+       ng-click="setItemWithKey(item,$event)"
+       dnd-Right-Selected="models.selected = item"
+       ng-include="'components/nodes/' + item.type + '.html'"
+       ng-class="joinClass(item.properties.classes, models.selected === item)"
+       ng-style="joinStyles(item.properties.flexStyles)"
+       context-menu="menuOptions(list,$index,item)"
+       >
+  </div>
+</div>

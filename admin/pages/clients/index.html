@@ -1,0 +1,45 @@
+<toaster-container></toaster-container>
+<div class="row">
+  <div class="col-md-12">
+    <button style="margin-bottom: 10px;" class="btn btn-success pull-right" ui-sref="app.admin.clients.add">
+      <i class="fa fa-plus"></i> {{'buttons.createNew' | translate}}
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-responsive table-bordered table-hover">
+      <thead class="thead-inverse">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="(i, client) in clients">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{client.attributes.name}}</td>
+        <td class="text-center" width="300">
+          <a href="#" class="btn btn-warning btn-xs" ui-sref="app.admin.clients.edit({id: client.id})">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </a>
+          <button class="btn btn-danger btn-xs" ng-click="deleteItem(client, i)">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-12">
+     <ul uib-pagination total-items="total" 
+        ng-model="currentPage" 
+        max-size="maxSize" 
+        class="pagination-sm pull-right"
+        ng-click="loadClient(currentPage)"
+        boundary-link-numbers="true">
+    </ul>
+  </div>
+</div>

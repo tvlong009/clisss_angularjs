@@ -1,0 +1,93 @@
+ <div class="row">
+  <div class="col-md-12">
+    <button class="btn btn-success" ui-sref="app.admin.projects">
+      <i class="fa fa-chevron-left"></i> {{'buttons.back' | translate}}
+    </button>
+  </div>
+</div>
+
+ <h3>Project ID: {{project.id}}</h3>
+<div class="row" style="margin-top: 20px">
+  <div class="col-md-12">
+    <table class="table table-responsive">
+      <tr>
+        <th>Name:</th>
+        <td>{{project.attributes.name}}</td>
+        </tr>
+      <tr>
+        <th>Pland Number:</th>
+        <td>{{project.attributes.patitent_num}}</td>
+      </tr>
+      <tr>
+        <th>Actual Number:</th>
+        <td>0</td>
+      </tr>
+      <tr>
+        <th>Progress:</th>
+        <td>{{project.attributes.progress}}%</td>
+      </tr>
+      <tr>
+        <th>Start date:</th>
+        <td>{{project.attributes.period_start_date}}</td>
+      </tr>
+      <tr>
+        <th>End date:</th>
+        <td>{{project.attributes.period_end_date}}</td>
+      </tr>
+      <tr>
+        <th>Role Types</th>
+        <td>
+          <ul class="tags">
+            <li ng-repeat="(i, role) in project.attributes.role">
+              <div class="tag">
+                <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="top:2px;cursor: pointer;" ng-click="deleteRole(role, i)" ></span>
+                {{role.attributes.name}}
+              </div>
+              <a class="label label-success" ui-sref="app.admin.projects.users({projectId: project.id, roleId: role.id})" >
+                <i class="fa fa-user-plus" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li>
+              <a class="btn btn-sm btn-success" ui-sref="app.admin.projects.roles({projectId: project.id})" >
+                <i class="fa fa-plus"></i>
+                Roles Types
+              </a>
+            </li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<h3>User In Project {{project.id}}</h3>
+<div class="row">
+  <div class="col-md-12">
+     <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role Types</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="(userIndex, user) in listUserBelongProject">
+             <td>{{user.attributes.name}}</td>
+             <td>{{user.attributes.email}}</td>
+             <td>
+                <ul class="tags">
+                  <li ng-repeat="(roleIndex, role) in user.relationships.role_types.data">
+                    <a class="tag">
+                    <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="top:2px;cursor: pointer;" ng-click="deleteUser(user,roleIndex,role,userIndex)"></span>
+                    {{role.attributes.name}}
+                    </a>
+                  </li>
+                </ul>
+              </td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+</div>

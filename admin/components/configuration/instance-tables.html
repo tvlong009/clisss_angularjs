@@ -1,0 +1,69 @@
+<table class="table table-bordered" style="margin-top: 20px;">
+  <thead>
+    <th class="col-xs-4" translate="insTable.title.chooseTable"></th>
+    <th class="col-xs-4" translate="insTable.title.setInsTableName"></th>
+    <th class="col-xs-4"></th>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="col-xs-4">
+      <select  class="form-control" ng-model="tableId">
+        <option ng-repeat="table in tables" value="{{table.id}}">{{table.attributes.name}}</option>
+      </select>
+    </td>
+    <td class="col-xs-4">
+      <input
+          class="form-control"
+          type="text"
+          ng-model="nameInstables"
+          placeholder="{{'table.insTableName' | translate}}">
+    </td>
+    <td class="col-xs-4">
+      <a class="btn btn-info btn-sm" ng-click="saveInstanceTable()" ng-if="!isUpdate">
+        <i class="glyphicon glyphicon-plus"></i>
+      </a>
+      <button class="btn btn-info btn-sm" ng-click="updateInstanceTable()" ng-if="isUpdate">
+        <i class="glyphicon glyphicon-save"></i>
+      </button>
+      <button class="btn btn-danger btn-sm" ng-click="deleteSelectedInstanceTable()" ng-disabled="listTableToDelete.length == 0">
+        <i class="glyphicon glyphicon-remove"></i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<table class="table table-fixed-custom">
+  <thead>
+  <tr style="clear: both">
+    <th class="col-xs-1">
+      <label>
+        <input type="checkbox" ng-model="tableChecked" ng-click="deleteAllTable()">
+      </label>
+    </th>
+    <th class="col-xs-2">{{'table.id' | translate}}</th>
+    <th class="col-xs-5">{{'table.insTableName' | translate}}</th>
+    <th class="col-xs-4"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="table in instanceTables" style="clear: both">
+    <td class="col-xs-1">
+      <label>
+        <input type="checkbox" ng-checked="tableChecked" ng-click="addToListTableToDelete(table)">
+      </label>
+    </td>
+    <td class="col-xs-2">
+      {{table.id}}
+    </td>
+    <td class="col-xs-5">
+      {{table.attributes.name}}
+    </td>
+    <td class="col-xs-4">
+      <a class="btn btn-success btn-sm" ng-click="getInsTable(table, $index)" ng-disabled="listColumnToDelete.length > 1">
+        <i class="glyphicon glyphicon-pencil"></i>
+      </a>
+    </td>
+  </tr>
+  </tbody>
+</table>

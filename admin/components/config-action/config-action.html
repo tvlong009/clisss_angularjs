@@ -1,0 +1,120 @@
+<div class="row">
+    <div class="col-md-3">
+      <label class="control-label">
+        action type
+      </label>
+      <select class="form-control"
+              ng-model="modelSelected.action.type"
+              ng-change="reFormatAction(modelSelected.action.type)">
+        <option value="login">log in</option>
+        <option value="logout">log out</option>
+        <option value="link">link</option>
+        <option value="actionFlow">action flow</option>
+      </select>
+    </div>
+    <div class="col-md-3" ng-if="modelSelected.action.type == 'link'" >
+      <label class="control-label">
+        link
+      </label>
+      <select class="form-control" ng-model="modelSelected.action.data">
+        <option ng-repeat="page in pages" value="{{page.id}}" ng-if="page.id != pageSelecting.id">{{page.attributes.name}}</option>
+      </select>
+    </div>
+    <div class="col-md-6"></div>
+</div>
+<div class="row">
+    <div class="col-md-12" style="padding: 8px">
+      <table class="table table-fixed-configAction" style="margin: 0px;" ng-if="modelSelected.action.type == 'actionFlow'">
+        <thead>
+        <tr>
+          <th class="col-md-3" translate="configuration.title.table"></th>
+          <th class="col-md-5" translate="configuration.title.condition" ng-if="table"></th>
+          <th class="col-md-2"  ng-if="table"></th>
+          <th class="col-md-2"  ng-if="table"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="col-md-3">
+            <select ng-model="table" ng-change="getColumnFromTable(table,action)" class="form-control">
+              <option ng-repeat="table in tables" value="{{table}}">{{table.attributes.name}}</option>
+            </select>
+          </td>
+          <td class="col-md-7" ng-if="table">
+            <condition-follow fields="fields" query="conditionFollow.query"></condition-follow>
+          </td>
+          <td class="col-md-2" ng-if="table">
+            <button ng-click="nextStep()"
+                    ng-disabled="conditionFollow.query.rules[0].has == 0"
+                    class="btn btn-sm btn-danger">
+              <span class="glyphicon glyphicon-arrow-right"></span></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+<div class="row" ng-if="isToNextTodoTrue">
+  <div class="col-md-12">
+    <h3>If True</h3>
+  </div>
+</div>
+<div class="row" ng-if="isToNextTodoTrue">
+  <div class="col-md-3">
+    <label class="control-label">
+      type
+    </label>
+    <select class="form-control"
+            ng-model="modelSelected.action.todoTrue.type"
+            ng-change="reFormatTodoTrue(modelSelected.action.todoTrue.type)">
+      <option value="alert">alert</option>
+      <option value="post">post data</option>
+      <option value="link">link</option>
+    </select>
+  </div>
+  <div class="col-md-3" ng-if="modelSelected.action.todoTrue.type == 'link'" >
+    <label class="control-label">
+      link
+    </label>
+    <select class="form-control" ng-model="modelSelected.action.todoTrue.data">
+      <option ng-repeat="pageRedirect in pages"
+              value="{{pageRedirect.id}}"
+              ng-if="pageRedirect.id != pageSelecting.id">{{pageRedirect.attributes.name}}</option>
+    </select>
+  </div>
+  <div class="col-md-3"
+       ng-if="modelSelected.action.todoTrue.type == 'alert'"
+       ng-init="modelSelected.action.todoTrue.data = 'Input your alert message'">
+    <label class="control-label">
+      message
+    </label>
+    <input
+        ng-model = "modelSelected.action.todoTrue.data"
+        style="margin-left: 5px" type="text" class="form-control"/>
+  </div>
+  <div class="col-md-6"></div>
+</div>
+<div class="row"
+     ng-init="initDataForPostData()"
+     ng-if="modelSelected.action.todoTrue.type == 'post'">
+  <todo-true fields="fields" model-selected="modelSelected" pages="pages" page-selecting="pageSelecting"></todo-true>
+</div>
+<div class="row" ng-if="isToNextTodoTrue">
+  <div class="col-md-12">
+    <h3>If false</h3>
+  </div>
+</div>
+
+<div class="row" ng-if="isToNextTodoTrue">
+    <todo-false model-selected="modelSelected" pages="pages" page-selecting="pageSelecting"></todo-false>
+</div>
+
+
+<div ng-if="modelSelected.action.type == 'login'">
+  <login-flow fields="fields" model-selected="modelSelected" pages="pages" page-selecting="pageSelecting"></login-flow>
+</div>
+
+
+<div ng-if="modelSelected.action.type == 'logout' ">
+  <login-flow fields="fields" model-selected="modelSelected" pages="pages" page-selecting="pageSelecting"></login-flow>
+</div>

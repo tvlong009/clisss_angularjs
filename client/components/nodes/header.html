@@ -1,0 +1,25 @@
+<div
+    ng-style="{
+        'font-size': ''+ item.properties.size + 'px', 
+        'text-align': item.properties.align
+    }" 
+    ng-class="
+    {
+            '__clisss_red_text': item.properties.colors[1].value === true ,
+            '__clisss_blue_text': item.properties.colors[2].value === true,
+            '__clisss_green_text': item.properties.colors[3].value === true,
+            '__clisss_yellow_text': item.properties.colors[4].value === true ,
+            '__clisss_white_text': item.properties.colors[5].value === true ,
+            '__clisss_gray_text': item.properties.colors[6].value === true,
+            '__clisss_graylight_text': item.properties.colors[7].value === true,
+            '__clisss_bluelight_text': item.properties.colors[8].value === true,
+    }"
+    style="{{item.properties.styles}}"
+>
+   <h1 ng-if="item.properties.headerType[0].value == true" >{{item.content}}</h1>
+   <h2 ng-if="item.properties.headerType[1].value == true" >{{item.content}}</h2>
+   <h3 ng-if="item.properties.headerType[2].value == true" >{{item.content}}</h3>
+   <h4 ng-if="item.properties.headerType[3].value == true" >{{item.content}}</h4>
+   <h5 ng-if="item.properties.headerType[4].value == true" >{{item.content}}</h5>
+   <h6 ng-if="item.properties.headerType[5].value == true" >{{item.content}}</h6>
+</div>

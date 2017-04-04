@@ -1,0 +1,63 @@
+<div class="login-box">
+    <div class="login-box-body">
+        <form name="login" ng-submit="auth($event)" novalidate>
+
+            <!--Username field-->
+            <div class="form-group has-feedback"
+                 ng-class="{'has-error': login.email.$error.required || login.email.$error.pattern}">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    ng-model="user.email"
+                    placeholder="Email"
+                    required
+                    ng-pattern="/^.+@.+\..+$/"/>
+
+                <div ng-messages="login.email.$error" role="alert">
+                    <div class="text-danger"
+                        ng-message-exp="['required','pattern']"
+                        translate="error.email">
+                    </div>
+                </div>
+            </div>
+
+            <!--Password field-->
+            <div class="form-group has-feedback"
+            ng-class="{'has-error': login.password.$error.required || login.password.$error.minlength}">
+              <input
+                  type="password"
+                  name="password"
+                  class="form-control"
+                  ng-model="user.password"
+                  placeholder="Password"
+                  required
+                  minlength="8">
+
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+              <div ng-messages="login.password.$error" role="alert">
+                <div class="text-danger"
+                    ng-message-exp="['required', 'minlength']"
+                     translate="error.password">
+                </div>
+              </div>
+
+            </div>
+
+
+            <!--Button submit-->
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <button type="submit"
+                            class="btn btn-success"
+                            ng-disabled="login.$invalid"
+                            translate="buttons.signIn">
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

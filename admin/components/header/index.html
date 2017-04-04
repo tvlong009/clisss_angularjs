@@ -1,0 +1,55 @@
+<!-- Main Header -->
+<header class="main-header">
+	<!-- Logo -->
+	<a href="#" ui-sref="app.admin.dashboard" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+		<span class="logo-mini"><b>CLISSS</b></span> <!-- logo for regular state and mobile devices -->
+		<span class="logo-lg"><b>CLISSS</b></span>
+	</a>
+	<!-- Header Navbar -->
+	<nav class="navbar navbar-static-top" role="navigation">
+		<!-- Sidebar toggle button-->
+		<ul class="nav navbar-nav">
+			<li>
+				<button class="btn sidebar-toggle" data-toggle="offcanvas"
+					 role="button"> <span class="sr-only">Toggle navigation</span>
+				</button>
+			</li>
+			<li ng-class="{ active: $state.includes('app.admin.projects')}">
+				<a href="#" ui-sref="app.admin.projects">Projects</a>
+			</li>
+			<li ng-class="{ active: $state.includes('app.admin.dashboard')}">
+				<a href="#" ui-sref="app.admin.dashboard">Master</a>
+			</li>
+			<li ng-if="isDesign" ng-click="updateDB()" style="cursor: pointer">
+				<a class="btn btn-success">
+					<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+					Save
+				</a>
+			</li>
+		</ul>
+		<!-- Navbar Right Menu -->
+		<div class="navbar-custom-menu">
+			<ul class="nav navbar-nav" >
+				<!-- User Account Menu -->
+				<li>
+					<a href="">
+						<span class="hidden-xs">{{currentUser.data.email}}</span>
+					</a>
+				</li>
+				<li>
+					<a href="">
+						<span class="hidden-xs">{{currentUser.data.type}}</span>
+					</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav" >
+				<li>
+					<a href="javascript:;" ng-click="logout()">
+						<i class="fa fa-sign-in"></i>
+						Logout
+					</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</header>

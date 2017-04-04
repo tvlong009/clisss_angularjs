@@ -1,0 +1,40 @@
+<div class="panel panel-info no-margin">
+  <div class="panel-heading">
+    <button
+        type="button"
+        class="instanceButton btn btn-xs"
+        ng-repeat="(i, item) in operations track by $index"
+        ng-click ="loadColumnFromOperations(item,i)"
+        ng-class ="{'active' : i == indexCurrentOperator}"
+        ng-disabled = "!modelSelected.isDB">
+      {{item.attributes.name}}
+    </button>
+    &nbsp;&nbsp;
+  </div>
+  <div class="panel-body no-padding" ng-if="columnTableQueried.length > 0 && modelSelected.isDB">
+    <table class="rootTable">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>{{'table.name' | translate}}</th>
+        <th>{{'table.type' | translate}}</th>
+        <th>{{'table.condition' | translate}}</th>
+        <th>{{'table.require' | translate}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="(i, item) in columnTableQueried track by $index"
+          ng-click="addValueModelSelected(item)">
+        <td>{{i + 1}}</td>
+        <td>{{item.attributes.name}}</td>
+        <td>{{item.attributes.content_type}}</td>
+        <td>{{item.attributes.condition}}</td>
+        <td>
+          <i class="glyphicon glyphicon-ok" ng-if="item.attributes.required"></i>
+          <i class="glyphicon glyphicon-remove" ng-if="!item.attributes.required"></i>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

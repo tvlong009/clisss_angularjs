@@ -1,0 +1,65 @@
+<toaster-container></toaster-container>
+<div class="row">
+  <div class="col-md-12">
+    <button style="margin-bottom: 10px;" class="btn btn-success pull-right" ui-sref="app.admin.users.add">
+      <i class="fa fa-plus"></i> {{'buttons.createNew' | translate}}
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div style="margin-bottom: 10px">
+      <form ng-submit="searchUser()">
+      <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search User" ng-model="searchCriteriaUser">
+          <div class="input-group-btn">
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-primary" ng-click="searchUser()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </div>
+          </div>
+      </div>
+      </form>
+    </div>
+    <table class="table table-responsive table-bordered table-hover">
+      <thead class="thead-inverse">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="(i, user) in users">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{user.attributes.name}}</td>
+        <td>{{user.attributes.email}}</td>
+        <td class="text-center" width="300">
+          <div>
+            <a href="#" class="btn btn-info btn-xs" ui-sref="app.admin.users.show({id: user.id})">
+              <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
+            <a href="#" class="btn btn-warning btn-xs" ui-sref="app.admin.users.edit({id: user.id})">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+            <button class="btn btn-danger btn-xs" ng-click="deleteItem(user, i)">
+              <span class="glyphicon glyphicon-remove"></span>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-12">
+     <ul uib-pagination
+         total-items="total"
+        ng-model="currentPage" 
+        max-size="maxSize" 
+        class="pagination-sm pull-right"
+        ng-click="loadUser(currentPage)"
+        boundary-link-numbers="true">
+    </ul>
+  </div>
+</div>

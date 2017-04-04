@@ -1,0 +1,16 @@
+<button
+    ng-if="!item.action"
+    class="btn {{item.properties.classes.join(' ')}}"
+    ng-style="joinStyles(item.properties.styles)">
+  <i class="fa fa-{{item.icon}}" ng-if="item.icon"></i>
+  {{item.label}}
+</button>
+
+<button
+  ng-if="item.action"
+  class="btn {{item.properties.classes.join(' ')}}"
+  ng-click="exec(item)"
+  ng-style="joinStyles(item.properties.styles)">
+  <i class="fa fa-{{item.icon}}" ng-if="item.icon"></i>
+  {{item.label}}
+</button>

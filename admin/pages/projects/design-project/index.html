@@ -1,0 +1,335 @@
+<div class="wrapper">
+  <!-- Navbar -->
+  <div ui-view="header"></div>
+  <!-- sidebar -->
+  <aside class="main-sidebar">
+    <section class="sidebar">
+      <ul class="sidebar-menu">
+        <li class="treeview active">
+          <a href="javascript:;">
+            <i class="fa fa-th"></i>
+            <span translate="titles.pages"></span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li ng-repeat="(i, page) in pages" ng-click="selectPage($event, page)"
+                ng-class="{active: page.id == pageSelecting.id}">
+              <a href="javascript:;">
+                <i class="fa fa-circle-o"></i>
+                <span>{{page.attributes.name}}</span>
+                <span style="text-align: right;">
+                  <small class="label bg-blue" data-toggle="modal" data-target="#setRules">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                  </small>
+                </span>
+                <span class="pull-right-container" ng-if="i != 0">
+                  <small class="label pull-right bg-red" ng-click="deletePage(page, i)">x</small>
+                </span>
+              </a>
+            </li>
+
+            <!--Add new page -->
+            <li>
+              <form name="form" ng-submit="addNewPage($event)" novalidate>
+                <div class="input-group">
+                  <input
+                      type="text"
+                      ng-model="pageName"
+                      name="pageName"
+                      class="form-control"
+                      placeholder="{{'buttons.addNew' | translate}}"
+                      ng-pattern="/^[a-zA-Z0-9\-\_]+$/">
+
+                  <span class="input-group-btn">
+                    <button type="submit"
+                            class="btn btn-flat"
+                            ng-disabled="form.$invalid">
+                      <i class="fa fa-plus"></i>
+                    </button>
+                  </span>
+                </div>
+
+                <div class="input-group"
+                     ng-class="{'has-error': form.pageName.$error.pattern}">
+                  <!--Show error-->
+                  <div ng-messages="form.pageName.$error" role="alert">
+                    <div class="text-danger"
+                         ng-message-exp="['pattern']"
+                         translate="error.pattern">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="javascript:;">
+            <i class="fa fa-cubes" aria-hidden="true"></i>
+            <span translate="titles.components"></span>
+          </a>
+        </li>
+        <!--Components-->
+        <li>
+          <div class="components">
+            <button
+                class="btn btn-block btn-dragable"
+                ng-repeat="item in models.templates"
+                dnd-draggable="item"
+                dnd-effect-allowed="copy">
+              <i class="{{item.iconComponent}}"></i>
+              <span>{{item.type}}</span>
+            </button>
+          </div>
+
+          <div dnd-list="[]" class="bin">
+            <img src="assets/img/bin.jpg"/>
+          </div>
+          <!--<a href="javascript:;">-->
+          <!--<i class="{{item.iconComponent}}"></i>-->
+          <!--<span>{{item.type}}</span>-->
+          <!--</a>-->
+        </li>
+      </ul>
+    </section>
+  </aside>
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+
+    <div class="wrapper-design">
+      <!--Drop area-->
+      <div id="design" class="resize-vertical-7">
+        <div class="panel panel-warning">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{pageSelecting.attributes.name}}</h3>
+          </div>
+
+          <div class="panel-body">
+            <div class="row __clisss">
+              <div class="col-md-12"
+                   ng-repeat="(zone, list) in models.dropzones"
+                   ng-include="'components/nodes/children.html'">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Re-sizer vertical-->
+      <div class="resizer"
+           resizer="vertical"
+           resizer-width="6"
+           resizer-left="#design"
+           resizer-right="#properties">
+      </div>
+
+      <!--Properties area-->
+      <div id="properties" class="design-column resize-vertical-3">
+        <div id="table" class="resize-horizontal-3">
+          <column-instance-table-queried
+              project-i-d="projectID"
+              page-selecting="pageSelecting"
+              column-table-queried="columnTableQueried"
+              instance-tables="instanceTables"
+              tables="tables"
+              operations = "operations"
+              model-selected = "models.selected"
+          ></column-instance-table-queried>
+        </div>
+
+        <div class="resizer horizontal"
+             resizer="horizontal"
+             resizer-height="6"
+             resizer-top="#table"
+             resizer-bottom="#property">
+        </div>
+
+        <div id="property" class="panel panel-info resize-horizontal-7">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-lg-6">
+                <h3 class="panel-title">Type: {{models.selected.type}}</h3>
+              </div>
+              <div class="col-lg-6" ng-if="models.selected.type == 'button'">
+                <small class="label bg-blue pull-right" data-toggle="modal" data-target="#setActions">
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+
+            <!--Directives Components Properties-->
+            <stacked class="__clisss" ng-if="models.selected.type == 'stacked'" models="models"></stacked>
+            <paragraph class="__clisss" ng-if="models.selected.type == 'paragraph'" ></paragraph>
+            <heading class="__clisss" ng-if="models.selected.type == 'heading'"></heading>
+            <list-custom class="__clisss" ng-if="models.selected.type == 'list'"></list-custom>
+            <input-custom class="__clisss" ng-if="models.selected.type == 'input'"></input-custom>
+            <textarea-custom class="__clisss" ng-if="models.selected.type == 'textarea'"></textarea-custom>
+            <button-custom class="__clisss" ng-if="models.selected.type == 'button'"></button-custom>
+            <table-custom class="__clisss" ng-if="models.selected.type == 'table'"></table-custom>
+            <select-custom class="__clisss" ng-if="models.selected.type == 'select'"></select-custom>
+            <label-custom class="__clisss" ng-if="models.selected.type == 'label'"></label-custom>
+            <checkbox class="__clisss" ng-if="models.selected.type == 'checkbox'"></checkbox>
+            <radio class="__clisss" ng-if="models.selected.type == 'radio'"></radio>
+            <image-custom class="__clisss" ng-if="models.selected.type == 'image'"></image-custom>
+            <form-custom class="__clisss" ng-if="models.selected.type == 'form'"></form-custom>
+
+            <div class="form-group">
+              Roles
+              <ul class="tags">
+                <li ng-repeat="(roleIndex, role) in roles">
+                  <a class="tag">
+                    <span ng-if="hasRole(role, models.selected.privacy)" class="glyphicon glyphicon-remove-circle"
+                          aria-hidden="true" style="top:2px;cursor: pointer;"
+                          ng-click="removeRole(role, models.selected.privacy)"></span>
+                    <span ng-if="!hasRole(role, models.selected.privacy)" class="glyphicon glyphicon-plus"
+                          aria-hidden="true" style="top:2px;cursor: pointer;"
+                          ng-click="addRole(role, models.selected.privacy)"></span>
+                    {{role.attributes.name}}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Modal Config Action flow -->
+  <div class="modal fade __clisss" id="setActions" role="dialog">
+    <div class="container modal-dialog" style="width: 100%;">
+      <div class="modal-content model_rule">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Set Action for {{models.selected.type}} </h4>
+        </div>
+        <div class="modal-body" style="width: 100%">
+          <config-action
+              model-selected="models.selected"
+              project-i-d="projectID"
+              tables="tables"
+              page-selecting="pageSelecting"
+              pages="pages"
+              fields="fields"
+          ></config-action>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" ng-click="testModel()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Config Database -->
+  <div class="modal fade __clisss" id="setRules" role="dialog">
+    <div class="container modal-dialog" style="width: 100%;">
+      <div class="modal-content model_rule">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Set alias for {{pageSelecting.attributes.name}} </h4>
+      </div>
+        <div class="modal-body" style="width: 100%">
+            <configuration
+                   ng-if="tables"
+                   project-i-d="projectID"
+                   tables="tables"
+                   page-selecting="pageSelecting"
+                   operations = "operations"
+                   operations-get = "operations_get"
+                   instance-tables = "instanceTables"
+                   class="customTabData"></configuration>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Footer -->
+  <div ui-view="footer"></div>
+</div>
+
+
+<!--Modal-->
+<div id="tableModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add Table</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <button class="btn btn-xs btn-warning" ng-repeat="tableValue in designPage_tables" style="margin-left: 5px; margin-bottom: 5px" ng-click="getTable(tableValue)">
+              #{{tableValue.attributes.name}}
+            </button>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-12" ng-if="table">
+            <form name="form" ng-submit="saveInstanceTable()">
+              <input
+                  type="text"
+                  name="name"
+                  ng-model = "nameInstables.name"
+                  placeholder="{{'table.name' | translate}}"
+                  required
+              >
+              &nbsp;&nbsp;
+              <button type="submit" class="btn btn-success btn-sm">Save</button>
+            </form>
+          </div>
+        </div>
+        <div ng-if="table">
+          <table class="rootTable">
+            <thead>
+            <tr>
+              <th colspan="5">Table {{table.attributes.name}}</th>
+            </tr>
+            <tr>
+              <th>#</th>
+              <th>{{'table.columnName' | translate}}</th>
+              <th>{{'table.columnType' | translate}}</th>
+              <th>{{'table.condition' | translate}}</th>
+              <th>{{'table.require' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="designPage_column in designPage_columns">
+              <td>{{designPage_column.id}}</td>
+              <td>{{designPage_column.attributes.name}}</td>
+              <td>{{designPage_column.attributes.content_type}}</td>
+              <td>{{designPage_column.attributes.condition}}</td>
+              <td>{{designPage_column.attributes.required}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="resizer horizontal"
+     resizer="horizontal"
+     resizer-height="6"
+     resizer-top="#property"
+     resizer-bottom="#local">
+</div>
+  <div id="local" class="resize-horizontal-2"></div>
+</div>
+

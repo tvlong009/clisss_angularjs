@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="col-md-12">
+    <button class="btn btn-success" ui-sref=".admin.projects.users">
+      <i class="fa fa-chevron-left"></i> {{'buttons.back' | translate}}
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-offset-4 col-md-3">
+    <form name="form" ng-submit="formAction($event)" novalidate>
+
+      <!--Username field-->
+      <div class="form-group has-feedback"
+           ng-class="{'has-error': form.name.$error.required}">
+
+
+        <input
+            type="text"
+            name="name"
+            class="form-control"
+            ng-model="user.name"
+            placeholder="Name"
+            required/>
+
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+
+        <div ng-messages="form.name.$error" role="alert">
+          <div class="text-danger"
+               ng-message-exp="['required']"
+               translate="error.require">
+          </div>
+        </div>
+      </div>
+
+
+      <!--Email-->
+      <div class="form-group has-feedback"
+           ng-class="{'has-error': form.email.$error.required || login.email.$error.pattern}">
+
+        <input
+            type="email"
+            name="email"
+            class="form-control"
+            ng-model="user.email"
+            placeholder="Email"
+            readonly
+            required
+            ng-pattern="/^.+@.+\..+$/"/>
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+
+        <div ng-messages="form.email.$error" role="alert">
+          <div class="text-danger"
+               ng-message-exp="['required','pattern']"
+               translate="error.email">
+          </div>
+        </div>
+      </div>
+
+
+      <!--Password field-->
+      <div class="form-group has-feedback"
+           ng-class="{'has-error': form.password.$error.required || form.password.$error.minlength}">
+        <input
+            type="password"
+            name="password"
+            class="form-control"
+            ng-model="user.password"
+            placeholder="Password"
+            required
+            minlength="8">
+
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+        <div ng-messages="form.password.$error" role="alert">
+          <div class="text-danger"
+               ng-message-exp="['required', 'minlength']"
+               translate="error.password">
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <!--Confirm Password field-->
+      <div class="form-group has-feedback"
+           ng-class="{'has-error': form.confirm_password.$error.required || form.confirm_password.$error.minlength || form.confirm_password.$error.compareTo}">
+        <input
+            type="password"
+            name="confirm_password"
+            class="form-control"
+            ng-model="user.confirm_password"
+            placeholder="Confirm Password"
+            required
+            minlength="8"
+            compare-to="user.password">
+
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+        <div ng-messages="form.confirm_password.$error" role="alert">
+          <div class="text-danger"
+               ng-message-exp="['required', 'minlength']"
+               translate="error.password">
+          </div>
+
+          <div class="text-danger"
+               ng-message-exp="['compareTo']"
+               translate="error.mismatch">
+          </div>
+        </div>
+
+      </div>
+
+
+      <!--Button submit-->
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <button type="submit"
+                  class="btn btn-warning"
+                  ng-disabled="form.$invalid"
+                  translate="buttons.update">
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

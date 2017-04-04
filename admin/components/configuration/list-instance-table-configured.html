@@ -1,0 +1,62 @@
+<div class="alert alert-group" style="margin: 0;">
+  <div class="form-inline">
+    <select ng-options="o.name as o.name for o in conditions" ng-model="table.attributes.query.condition" class="form-control input-sm"></select>
+    <button style="margin-left: 5px" ng-click="addCondition(table)" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Add Condition</button>
+    <!--<button style="margin-left: 5px" ng-click="addGroup()" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Add Group</button>-->
+    <!--<button style="margin-left: 5px" ng-click="removeGroup()" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus-sign"></span> Remove Group</button>-->
+  </div>
+  <div class="group-conditions">
+    <div ng-repeat="rule in table.attributes.query.rules| orderBy:'index'" class="condition">
+      <div ng-switch="rule.hasOwnProperty('query')">
+        <div ng-switch-when="true">
+          <!--<query-builder-->
+              <!--instance-tables="instanceTables"-->
+              <!--page-selecting="pageSelecting"-->
+              <!--query="filter.operation.query"></query-builder>-->
+        </div>
+        <div ng-switch-default="ng-switch-default">
+          <div class="form-inline">
+            <div class="form-inline">
+              <select ng-options="t.id as t.name for t in fields" ng-model="rule.id" ng-change="validateType(rule)" class="form-control"></select>
+              <input
+                  ng-if = "rule.type"
+                  ng-model = "rule.type"
+                  disabled
+                  style="margin-left: 5px" type="text" class="form-control"/>
+              <select style="margin-left: 5px" ng-options="c.value as c.name for c in operators" ng-model="rule.operator" class="form-control"></select>
+              <input
+                  ng-if="rule.type == 'integer'"
+                  type="number"
+                  min="–2147483648"
+                  max="2147483647"
+                  style="margin-left: 5px" type="text" ng-model="rule.value" class="form-control"/>
+              <input
+                  ng-if="rule.type == 'float'"
+                  type="number"
+                  [min="2.2250738585072014e-308"]
+                  [max="1.7976931348623157e+308"]
+                  style="margin-left: 5px" type="text" ng-model="rule.value" class="form-control"/>
+              <input
+                  ng-if="rule.type == 'string'"
+                  type="text"
+                  style="margin-left: 5px" type="text" ng-model="rule.value" class="form-control"/>
+              <div ng-if="rule.type == 'date'"
+                   class="input-group date"
+                   data-provide="datepicker"
+                   data-date-format="yyyy/mm/dd">
+                <input
+                    type="text"
+                    class="form-control"
+                    ng-model="rule.value">
+                <div class="input-group-addon">
+                  <span class="glyphicon glyphicon-th"></span>
+                </div>
+              </div>
+              <button style="margin-left: 5px" ng-click="removeCondition($index)" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus-sign"></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

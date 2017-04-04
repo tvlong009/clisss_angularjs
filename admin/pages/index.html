@@ -1,0 +1,21 @@
+<div class="wrapper">
+
+  <div ui-view="header"></div>
+  <div ui-view="sidebar"></div>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
+      <div class="box box-default">
+        <div class="box-body">
+          <div ui-view="wrapper"></div>
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <!-- /.content-wrapper -->
+  <div ui-view="footer"></div>
+</div>

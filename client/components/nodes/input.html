@@ -1,0 +1,17 @@
+
+<input type="{{item.inputType}}"
+       name="{{item.model}}"
+       class="form-control"
+       placeholder="{{item.placeHolder}}"
+       ng-style="joinStyles(item.properties.styles)"
+       ng-if="item.inputMethod == 'post'"
+
+>
+
+<input type="{{item.inputType}}"
+       class="form-control"
+       placeholder="{{item.placeHolder}}"
+       ng-style="joinStyles(item.properties.styles)"
+       ng-model="item.model"
+       ng-if="item.inputMethod == 'get'"
+>

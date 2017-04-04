@@ -1,0 +1,20 @@
+
+    <ul ng-if="item.properties.listType == 'ul'" class="list-group"
+        ng-style="joinStyles(item.properties.styles)"
+    >
+        <li class="list-group-item"  ng-repeat="unit in item.items" id="{{item.id}}" >
+            <input type="text" style="border: none; width:100%;" ng-model="unit.text"
+              ng-style="{'text-align': item.properties.align }"
+              ng-disabled="item.isDB"/></li>
+    </ul>
+
+   <ol ng-if="item.properties.listType == 'ol'"  class="list-group"
+       ng-style="joinStyles(item.properties.styles)"
+    >
+        <li class="list-group-item"  ng-repeat="unit in item.items" id="{{item.id}}" >
+            <input type="text" style="border: none; width:100%;" ng-model="unit.text"
+              ng-style="{'text-align': item.properties.align }"
+              ng-disabled="item.isDB"/></li>
+    </ol>
+
+

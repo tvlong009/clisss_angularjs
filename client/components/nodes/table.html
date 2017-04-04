@@ -1,0 +1,48 @@
+ <table ng-show="!item.isDB"
+      class="table table-bordered table-hover"
+      ng-style="joinStyles(item.properties.styles)"
+  >
+    <thead>
+      <tr>
+        <th ng-repeat="column in item.columns"
+            ng-style="joinStyles(item.properties.styles)">
+          <input type="text" style="border: none; background: none; width: 100%;"
+                 ng-model="column.name"
+                 ng-style="joinStyles(item.properties.styles)"/>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="row in item.rows">
+        <td ng-repeat="data in row.data">
+            <input type="text" style="border: none; background: none; width: 100%;"
+                ng-style="joinStyles(item.properties.styles)"
+                ng-model="data.value"/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table id="{{item.data.table}}" ng-show="item.isDB"
+         class="table table-bordered table-hover"
+         ng-style="joinStyles(item.properties.styles)"
+  >
+    <thead>
+    <tr>
+      <th  ng-repeat="column in item.dbColumns"
+           ng-style="joinStyles(item.properties.styles)">
+        {{column.name}}
+        <!--<input type="text" style="border: none; background: none; width: 100%;"-->
+               <!--ng-model="column.name"-->
+               <!--ng-style="joinStyles(item.properties.styles)"/>-->
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="row in dataRows">
+      <td ng-repeat="column in item.dbColumns">
+          {{row[column.name].value}}
+      </td>
+    </tr>
+    </tbody>
+  </table>

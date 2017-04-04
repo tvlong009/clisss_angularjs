@@ -1,0 +1,33 @@
+<div class="col-md-12">
+  <h4>Choice column that you wanna post it to database</h4>
+</div>
+<div class="col-md-12">
+  <label class="checkbox-inline" ng-repeat="field_todo in fields" ng-click="setDataForTodo(field_todo)">
+    <input type="checkbox" value="" required>{{field_todo.name}}
+  </label>
+</div>
+<div class="col-md-12">
+    <h4>Choice action after post data successfully</h4>
+</div>
+<div class="col-md-3">
+    <label class="control-label">
+      type
+    </label>
+    <select class="form-control"
+            ng-model="modelSelected.action.todoTrue.afterPostData.type"
+            ng-change="reFormatAfterPostData(modelSelected.action.todoTrue.afterPostData.type)">
+      <option value="alert">reload</option>
+      <option value="link">link</option>
+    </select>
+</div>
+<div class="col-md-3" ng-if="modelSelected.action.todoTrue.afterPostData.type == 'link'" >
+    <label class="control-label">
+      link
+    </label>
+    <select class="form-control" ng-model="modelSelected.action.todoTrue.afterPostData.data">
+      <option ng-repeat="linkPage in pages"
+              value="{{linkPage.id}}"
+              ng-if="linkPage.id != pageSelecting.id">{{linkPage.attributes.name}}</option>
+    </select>
+  </div>
+<div class="col-md-6"></div>

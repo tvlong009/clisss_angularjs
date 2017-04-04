@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-md-12">
+    <button class="btn btn-success" ui-sref="app.admin.clients">
+      <i class="fa fa-chevron-left"></i> {{'buttons.back' | translate}}
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-offset-4 col-md-3">
+    <form name="form" ng-submit="formAction($event)" novalidate>
+
+      <!--Username field-->
+      <div class="form-group has-feedback"
+           ng-class="{'has-error': form.name.$error.required}">
+
+
+        <input
+            type="text"
+            name="name"
+            class="form-control"
+            ng-model="client.name"
+            placeholder="Name"
+            required/>
+
+        <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
+
+        <div ng-messages="form.name.$error" role="alert">
+          <div class="text-danger"
+               ng-message-exp="['required']"
+               translate="error.require">
+          </div>
+        </div>
+      </div>
+
+
+      <!--Button submit-->
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <button type="submit"
+                  class="btn btn-success"
+                  ng-disabled="form.$invalid"
+                  translate="buttons.update">
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

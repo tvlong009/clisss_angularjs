@@ -1,0 +1,152 @@
+<div class="form-group">
+  <label translate="flex.title.direction"></label>
+  <select
+      ng-model="models.selected.properties.classes[0].name"
+      class="form-control">
+    <option value="directionColumn" translate="flex.column"></option>
+    <option value="directionRow" translate="flex.row"></option>
+    <option value="directionRowReverse" translate="flex.columnReverse"></option>
+    <option value="directionColumnReverse" translate="flex.rowReverse"></option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label translate="flex.title.wrap"></label>
+  <select
+      ng-model="models.selected.properties.classes[1].name"
+      class="form-control">
+    <option value="nowrapFlex" translate="flex.nowrap"></option>
+    <option value="wrapFlex" translate="flex.wrap"></option>
+    <option value="wrapReverseFlex" translate="flex.wrapReverse"></option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label translate="flex.title.justifyContent"></label>
+  <select
+      ng-model="models.selected.properties.classes[2].name"
+      class="form-control">
+    <option value="flexStartContent" translate="flex.start"> </option>
+    <option value="flexEndContent" translate="flex.end"></option>
+    <option value="flexCenterContent" translate="flex.center"></option>
+    <option value="flexSpaceBetweenContent" translate="flex.spaceBetween"></option>
+    <option value="flexSpaceAroundContent" translate="flex.spaceAround"></option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label translate="flex.title.alignItem"></label>
+  <select
+      ng-model="models.selected.properties.classes[3].name"
+      class="form-control">
+    <option value="alignItemStretch" translate="flex.stretch"></option>
+    <option value="alignItemStart" translate="flex.start"></option>
+    <option value="alignItemEnd" translate="flex.end"></option>
+    <option value="alignItemCenter" translate="flex.center"></option>
+    <option value="alignItemBaseline" translate="flex.baseline"></option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label translate="flex.title.alignContent"></label>
+  <select
+      ng-model="models.selected.properties.classes[4].name"
+      class="form-control">
+    <option value="alignContentStretch" translate="flex.stretch"></option>
+    <option value="alignContentStart" translate="flex.start"></option>
+    <option value="alignContentEnd" translate="flex.end"></option>
+    <option value="alignContentCenter" translate="flex.center"></option>
+    <option value="alignContentSpaceAround" translate="flex.spaceAround"></option>
+    <option value="alignContentSpaceBetween" translate="flex.spaceBetween"></option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label translate="flex.title.alignSelf"></label>
+  <select
+      ng-model="models.selected.properties.classes[5].name"
+      class="form-control">
+    <option value="alignSelfAuto" translate="flex.auto"></option>
+    <option value="alignSelfStart" translate="flex.start"></option>
+    <option value="alignSelfEnd" translate="flex.end"></option>
+    <option value="alignSelfCenter" translate="flex.center"></option>
+    <option value="alignSelfBaseline" translate="flex.baseline"></option>
+    <option value="alignSelfStretch" translate="flex.stretch"></option>
+  </select>
+</div>
+<div class="form-group">
+  <h3 translate="titles.flexStyle"></h3>
+  <div class="table-wrapper">
+    <div class="table-scroll">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th><span class="text" translate="titles.style"></span></th>
+          <th><span class="text" translate="titles.value"></span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="flex in models.selected.properties.flexStyles">
+          <td>
+            <input class="form-control"  ng-model="flex.name" type="text" value="{{flex.name}}"/>
+          </td>
+          <td>
+            <input class="form-control" ng-model="flex.value" type="text" value="{{flex.value}}"/>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="form-group">
+  <h3 translate="titles.cssStyle"></h3>
+  <div class="table-wrapper">
+    <div class="table-scroll">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th><span class="text" translate="titles.style"></span></th>
+          <th><span class="text" translate="titles.value"></span></th>
+          <th>
+                            <span class="text">
+                                 <button class="btn btn-success btn-sm" ng-click="createStyle()">
+                                    <i class="glyphicon glyphicon-plus-sign"></i>
+                                </button>
+                            </span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="style in models.selected.properties.styles">
+          <td><input class="form-control"   ng-model="style.name" type="text" value="{{style.name}}"/></td>
+          <td ng-if="checkColor(style.name)">
+            <input ng-if="!checkBackgroundImage(style)" class="form-control" colorpicker type="text" ng-model="style.value"/>
+
+            <div ng-if="checkBackgroundImage(style)">
+              <ui-select ng-model="style.value">
+                <ui-select-match placeholder="Search picture ">
+                  {{$select.selected.attributes.name}}
+                </ui-select-match>
+                <ui-select-choices repeat="picture in pictures | filter: $select.search"">
+                <img ng-src="{{loadUrl(picture.attributes.image.url)}}" height="50px" width="50px"/> &nbsp;
+                <div ng-bind-html="picture.attributes.name| highlight: $select.search" style="display: inline"></div>
+                </ui-select-choices>
+              </ui-select>
+            </div>
+          </td>
+          <td ng-if="!checkColor(style.name)">
+            <input class="form-control" ng-model="style.value" type="text" value="{{style.value}}"/>
+          </td>
+          <td>
+            <button class="btn btn-danger btn-sm" ng-click="deleteStyle($index)">
+              <i class="glyphicon glyphicon-trash"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
